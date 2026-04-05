@@ -70,8 +70,12 @@ const mentorChatLimiter = rateLimit({
   },
 });
 
+app.get('/', (_req, res) => {
+  res.send('Backend is running');
+});
+
 app.get('/health', (_req, res) => {
-  res.json({ ok: true, status: 'OK' });
+  res.json({ ok: true });
 });
 
 function optionalAppGate(req, res, next) {
@@ -250,10 +254,9 @@ async function runStartupSelfTest() {
 }
 
 const PORT = Number(process.env.PORT) || 5000;
-const HOST = '0.0.0.0';
 
-app.listen(PORT, HOST, () => {
-  console.log(`Server running on http://${HOST}:${PORT} (LAN: use your PC IP, e.g. 192.168.31.161:${PORT})`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
   if (process.env.MENTOR_SELF_TEST === '1') {
     void runStartupSelfTest();
   }
