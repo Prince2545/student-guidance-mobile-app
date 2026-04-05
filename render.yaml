@@ -1,0 +1,15 @@
+# Render Blueprint: connect repo, then review env vars in dashboard (never commit secrets).
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: student-guidance-mentor-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Set as Secret in dashboard: NVIDIA_API_KEY, MENTOR_APP_KEY, optional AI_MODEL
+      # Render sets PORT and RENDER=true automatically.

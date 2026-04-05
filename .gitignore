@@ -1,0 +1,14 @@
+# Local scratch files — never commit secrets here
+test.txt
+test 2.txt
+test 3.txt
+
+# Env files (secrets)
+backend/.env
+student-guidance-app/.env
+mentor-backend/.env
+**/.env.local
+
+node_modules/
+.cursor/
+*.log
