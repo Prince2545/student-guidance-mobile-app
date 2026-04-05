@@ -3,12 +3,53 @@ test.txt
 test 2.txt
 test 3.txt
 
-# Env files (secrets)
+# Env files (secrets) — per-folder
 backend/.env
 student-guidance-app/.env
 mentor-backend/.env
 **/.env.local
 
+# dependencies
 node_modules/
+
+# Expo (under student-guidance-app)
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# misc
 .cursor/
 *.log
+*.tsbuildinfo
+
+# secret-bearing filenames (avoid accidental commits)
+*api*key*
+*token*
+*secret*
+github-key*.txt
+
+# generated native folders (Expo prebuild)
+student-guidance-app/ios
+student-guidance-app/android

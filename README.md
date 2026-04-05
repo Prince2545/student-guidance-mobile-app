@@ -1,10 +1,16 @@
-# Project Experience 2
+# Student Guidance — monorepo
 
-Student guidance Expo app + LAN mentor proxy.
+React Native (Expo) student app plus a small **mentor API** you can run locally or on Render.
+
+**GitHub:** [Prince2545/student-guidance-mobile-app](https://github.com/Prince2545/student-guidance-mobile-app)
+
+The Expo project lives in **`student-guidance-app/`** (run `cd student-guidance-app` then `npm install` / `npx expo start`).
+
+## App features
+
+- Career discovery (3 phases), daily tasks with proof upload, progress (streak / level / activity), AI Mentor chat, profile / reset.
 
 ## Mentor backend (use this)
-
-Run **`backend/`** only:
 
 ```bash
 cd backend
@@ -12,51 +18,41 @@ cd backend
 npm start
 ```
 
-Listens on **`0.0.0.0:5000`**. The mobile app must call your PC’s **Wi‑Fi IP** (not `localhost`), e.g. `http://192.168.x.x:5000`.
-
-Smoke test (server must already be running):
+Local default: **`0.0.0.0:5000`**. For a physical phone, use your PC’s LAN IP, not `localhost`.
 
 ```bash
 cd backend
-npm run smoke
+npm run smoke   # with server running
 ```
 
 ### Deploy API to Render (HTTPS)
 
-See **[backend/README.md](backend/README.md)**. Optional Blueprint: [`render.yaml`](render.yaml) (root directory `backend`, `npm install` / `npm start`). Set **`NVIDIA_API_KEY`** and **`MENTOR_APP_KEY`** only in the Render dashboard. Then set the app’s **`EXPO_PUBLIC_MENTOR_BACKEND_URL`** to `https://<your-service>.onrender.com`.
+See **[backend/README.md](backend/README.md)** and root [`render.yaml`](render.yaml). Set **`NVIDIA_API_KEY`** and **`MENTOR_APP_KEY`** only in the Render dashboard. Point the app at **`EXPO_PUBLIC_MENTOR_BACKEND_URL=https://<your-service>.onrender.com`**.
 
 ## Expo app
 
 ```bash
 cd student-guidance-app
-# Optional: MENTOR_BACKEND_URL=http://YOUR_PC_IP:5000 in .env
 npx expo start
 ```
 
-Phone and PC must be on the **same Wi‑Fi** when using the mentor on a physical device.
-
 ## Deprecated
 
-The **`mentor-backend/`** folder is **deprecated**; use **`backend/`** instead.
+**`mentor-backend/`** is deprecated; use **`backend/`**.
 
 ## Security
 
-- NVIDIA / API keys belong only in **`backend/.env`** (listed in **`backend/.gitignore`**). Do not commit `.env`.
-- Do not put NVIDIA keys in `student-guidance-app` env vars for production builds.
-- The mentor API is **rate limited** (20 requests / minute / IP on `POST /api/mentor/chat`).
-- Set **`MENTOR_APP_KEY`** in `backend/.env` and the **same** value as **`EXPO_PUBLIC_MENTOR_APP_KEY`** in `student-guidance-app/.env`. The app sends header **`x-app-key`** on every mentor request. If they differ or either is empty, you get **`403`** with `{ error: "AI unavailable" }`.
+- NVIDIA keys: **`backend/.env`** only (gitignored). For EAS/APK builds, use **EAS Environment Variables** for `EXPO_PUBLIC_*` — never commit secrets.
+- **`MENTOR_APP_KEY`** (backend) must match **`EXPO_PUBLIC_MENTOR_APP_KEY`** (app).
 
-## Manual E2E (Mentor)
+## Repo layout
 
-1. Start backend with a valid `NVIDIA_API_KEY` in `backend/.env`.
-2. `cd backend && npm run smoke` (with server running) — expect `/health` ok.
-3. Start Expo; open Mentor; send a message — expect a normal reply.
-4. Backend terminal should show `incoming request` and `NVIDIA response`.
+- `student-guidance-app/` — Expo app (`src/`, `App.tsx`, …)
+- `backend/` — Express mentor proxy
+- `render.yaml` — optional Render Blueprint
 
-## Automated checks (app)
+## Automated checks
 
-From `student-guidance-app`: `npm run typecheck`
-
-## Branding
-
-The provided logo is copied into `student-guidance-app/assets/` as `brand-source.png` and used for `icon.png`, `splash-icon.png`, `adaptive-icon.png`, and `favicon.png`. For store submission, regenerate exact sizes with [Expo app icon / splash docs](https://docs.expo.dev/develop/user-interface/splash-screen-and-app-icon/) if the build pipeline warns about dimensions.
+```bash
+cd student-guidance-app && npm run typecheck
+```
