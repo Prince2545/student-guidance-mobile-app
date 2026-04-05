@@ -3,8 +3,8 @@ import Constants from 'expo-constants';
 export const AI_API_FRIENDLY_ERROR = 'AI is currently unavailable. Please try again.';
 
 /**
- * Fallback when `expo.extra.mentorBackendUrl` is missing (should be set via app.config / EAS).
- * Production default: Render deploy. For LAN dev, set EXPO_PUBLIC_MENTOR_BACKEND_URL in `.env`.
+ * Fallback when `expo.extra.mentorBackendUrl` is missing.
+ * Keep in sync with `DEFAULT_MENTOR_BACKEND_URL` in `app.config.js`. LAN dev: set `EXPO_PUBLIC_MENTOR_BACKEND_URL` in `.env`.
  */
 export const DEFAULT_MENTOR_BACKEND_URL =
   'https://student-guidance-mobile-app.onrender.com';

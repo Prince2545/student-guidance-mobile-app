@@ -6,6 +6,17 @@
     "preview": {
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_MENTOR_BACKEND_URL": "https://student-guidance-mobile-app.onrender.com"
+      }
+    },
+    "production": {
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_MENTOR_BACKEND_URL": "https://student-guidance-mobile-app.onrender.com"
       }
     }
   }

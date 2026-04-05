@@ -27,7 +27,7 @@ npm run smoke   # with server running
 
 ### Deploy API to Render (HTTPS)
 
-See **[backend/README.md](backend/README.md)** and root [`render.yaml`](render.yaml). Set **`NVIDIA_API_KEY`** and **`MENTOR_APP_KEY`** only in the Render dashboard. Point the app at **`EXPO_PUBLIC_MENTOR_BACKEND_URL=https://<your-service>.onrender.com`**.
+See **[backend/README.md](backend/README.md)** and root [`render.yaml`](render.yaml). Set **`NVIDIA_API_KEY`** and **`MENTOR_APP_KEY`** only in the Render dashboard. The app defaults to **`https://student-guidance-mobile-app.onrender.com`**; override with **`EXPO_PUBLIC_MENTOR_BACKEND_URL`** only if you use another host.
 
 ## Expo app
 
