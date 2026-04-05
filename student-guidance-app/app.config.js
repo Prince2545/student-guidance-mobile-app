@@ -13,7 +13,7 @@ module.exports = {
       mentorBackendUrl:
         process.env.EXPO_PUBLIC_MENTOR_BACKEND_URL ||
         process.env.MENTOR_BACKEND_URL ||
-        'http://192.168.31.161:5000',
+        'https://student-guidance-mobile-app.onrender.com',
       // Must exactly match backend MENTOR_APP_KEY (set in student-guidance-app/.env — no fallback).
       mentorAppKey: (process.env.EXPO_PUBLIC_MENTOR_APP_KEY || '').trim(),
     },

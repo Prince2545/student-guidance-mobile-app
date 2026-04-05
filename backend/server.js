@@ -43,7 +43,6 @@ if (process.env.RENDER === 'true' || process.env.TRUST_PROXY === '1') {
 
 console.log('[Mentor proxy] NVIDIA credential configured:', API_KEY.length > 0);
 console.log('[Mentor proxy] Optional x-app-key gate:', APP_GATE_KEY.length > 0 ? 'enabled' : 'disabled');
-console.log('[Mentor proxy] .env path:', path.resolve(__dirname, '.env'));
 
 app.use((req, res, next) => {
   if (req.headers['access-control-request-private-network']) {

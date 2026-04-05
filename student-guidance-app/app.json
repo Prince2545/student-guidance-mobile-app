@@ -31,7 +31,7 @@
       "eas": {
         "projectId": "c02a59e1-b75c-424c-a931-27ee76ae3ee4"
       },
-      "mentorBackendUrl": "http://192.168.31.161:5000"
+      "mentorBackendUrl": "https://student-guidance-mobile-app.onrender.com"
     }
   }
 }

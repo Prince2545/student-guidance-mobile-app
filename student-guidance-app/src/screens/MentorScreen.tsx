@@ -74,6 +74,7 @@ export function MentorScreen() {
   const completedTaskCount = completedTasks.length;
   const [draft, setDraft] = useState('');
   const [sendingAi, setSendingAi] = useState(false);
+  const sendingAiRef = useRef(false);
 
   const quickReplies = useMemo(
     () => [
@@ -103,7 +104,8 @@ export function MentorScreen() {
 
   const sendUserMessage = async () => {
     const text = draft.trim();
-    if (!text || sendingAi) return;
+    if (!text || sendingAiRef.current) return;
+    sendingAiRef.current = true;
     const userId = `u-free-${Date.now()}`;
     setMessages((prev) => [...prev, { id: userId, role: 'user', text, at: new Date().toISOString() }]);
     setDraft('');
@@ -134,6 +136,7 @@ export function MentorScreen() {
         },
       ]);
     } finally {
+      sendingAiRef.current = false;
       setSendingAi(false);
     }
   };
@@ -186,9 +189,11 @@ export function MentorScreen() {
             <Pressable
               key={q.id}
               onPress={() => sendCanned(q.id)}
+              disabled={sendingAi}
               style={({ pressed }) => [
                 styles.quickChip,
-                pressed && { transform: [{ scale: 0.99 }], opacity: 0.9 },
+                (pressed || sendingAi) && { opacity: 0.6 },
+                pressed && !sendingAi && { transform: [{ scale: 0.99 }], opacity: 0.9 },
               ]}
             >
               <View style={styles.quickChipInner}>

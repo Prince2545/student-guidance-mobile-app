@@ -3,11 +3,11 @@ import Constants from 'expo-constants';
 export const AI_API_FRIENDLY_ERROR = 'AI is currently unavailable. Please try again.';
 
 /**
- * LAN mentor proxy on your PC (port 5000, not Metro 8082).
- * If the app cannot reach the mentor, set MENTOR_BACKEND_URL in student-guidance-app/.env to
- * http://<your_WiFi_IP>:5000 (Windows: ipconfig → IPv4; never use localhost on a physical phone).
+ * Fallback when `expo.extra.mentorBackendUrl` is missing (should be set via app.config / EAS).
+ * Production default: Render deploy. For LAN dev, set EXPO_PUBLIC_MENTOR_BACKEND_URL in `.env`.
  */
-export const DEFAULT_MENTOR_BACKEND_URL = 'http://192.168.31.161:5000';
+export const DEFAULT_MENTOR_BACKEND_URL =
+  'https://student-guidance-mobile-app.onrender.com';
 
 type ExtraConfig = {
   mentorBackendUrl?: string;
@@ -110,6 +110,10 @@ export async function sendMessageToAI(
     console.log('[Mentor] request', url, { messageLen: trimmed.length, hasHint: Boolean(payload.contextualHint) });
   }
 
+  const controller = new AbortController();
+  const timeoutMs = 120000;
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
   let res: Response;
   try {
     res = await fetch(url, {
@@ -120,12 +124,15 @@ export async function sendMessageToAI(
         'x-app-key': xAppKey,
       },
       body: JSON.stringify(payload),
+      signal: controller.signal,
     });
   } catch (e: unknown) {
     if (__DEV__) {
       console.warn('[Mentor] network error:', e instanceof Error ? e.message : e);
     }
     throw new Error(AI_API_FRIENDLY_ERROR);
+  } finally {
+    clearTimeout(timeoutId);
   }
 
   let parsed: unknown;
