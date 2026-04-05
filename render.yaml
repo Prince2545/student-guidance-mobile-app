@@ -12,4 +12,5 @@ services:
       - key: NODE_VERSION
         value: "20"
       # Set as Secret in dashboard: NVIDIA_API_KEY, MENTOR_APP_KEY, optional AI_MODEL
+      # App needs POST /api/career/analyze-reflections on this service — redeploy after backend changes.
       # Render sets PORT and RENDER=true automatically.
